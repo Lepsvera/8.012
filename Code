@@ -1,0 +1,36 @@
+clear all
+close all
+clc
+n=50#number of particles
+m=1#mass
+g=10#gravitational constant
+a=10#length of the string
+dt=0.005#time increment
+t=1#total time of the simulation
+N=t/dt+1;
+x=zeros(n+1,N);
+y=linspace(0,-a*n,n+1);
+vx=zeros(n+1,N);
+vx(n+1,1)=1000#initial velocity
+vy=zeros(n+1,N);
+for j=2:N
+  for i=2:n
+  vx(i,j)=vx(i,j-1)-(g/a)*((n-(i-1)+1)*(x(i,j-1)-x(i-1,j-1))-(n-(i-1))*(x(i+1,j-1)-x(i,j-1)));
+  endfor
+ vx(n+1,j)=vx(n+1,j-1)-g/a*(x(n+1,j-1)-x(n,j-1));
+  for i=2:n+1
+    x(i,j)=x(i,j-1)+vx(i,j)*dt;
+  endfor
+endfor
+
+f1 = figure;
+
+
+for i=1:N
+
+  plot(x(:,i),y,'o')
+  xlim([-100 100])
+  pause(0.1)
+ 
+  
+endfor
